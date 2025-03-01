@@ -1,15 +1,61 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-       
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+public class Main {
+
+    public static int calculateAge(LocalDate birthDate) {
+        LocalDate today = LocalDate.now();
+        int age = today.getYear() - birthDate.getYear();
+
+        if (today.getDayOfYear() < birthDate.getDayOfYear()) {
+            age--;
         }
+
+        return age;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hello there! Welcome to our Age Calculator System!");
+
+        while (true) {
+
+            System.out.print("Please enter your birth date (YYYY-MM-DD): ");
+            String birthDateInput = scanner.nextLine();
+
+            if (birthDateInput.equalsIgnoreCase("exit")) {
+                System.out.println("Thank you for using our program. Goodbye!");
+                break;
+            }
+
+            try {
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate birthDate = LocalDate.parse(birthDateInput, formatter);
+
+                int age = calculateAge(birthDate);
+                System.out.println("You are " + age + " years old.");
+
+                if (age < 18) {
+                    System.out.println("You are a minor.");
+                } else {
+                    System.out.println("You are in legal age.");
+                }
+
+                System.out.print("Do you want to try again? (yes/no): ");
+                String tryAgain = scanner.nextLine();
+                if (!tryAgain.equalsIgnoreCase("yes")) {
+                    System.out.println("Thank you for using our program. Goodbye!");
+                    break;
+                }
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
+        }
+
+        scanner.close();
     }
 }
