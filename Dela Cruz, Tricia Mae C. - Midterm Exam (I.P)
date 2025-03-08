@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class NameFormatter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        
+        
+        String lowerCase = name.toLowerCase();
+        String upperCase = name.toUpperCase();
+        String formatCase = toTitleCase(name);
+        
+        // Display the results
+        System.out.println("\nConverted Result:");
+        System.out.println("lower case  : " + lowerCase);
+        System.out.println("upper case  : " + upperCase);
+        System.out.println("format case : " + formatCase);
+        
+        scanner.close();
+    }
+    
+  
+    private static String toTitleCase(String str) {
+        String[] words = str.toLowerCase().split("\\s+");
+        StringBuilder formatted = new StringBuilder();
+        
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                formatted.append(Character.toUpperCase(word.charAt(0)))
+                         .append(word.substring(1))
+                         .append(" ");
+            }
+        }
+        
+        return formatted.toString().trim();
+    }
+}
