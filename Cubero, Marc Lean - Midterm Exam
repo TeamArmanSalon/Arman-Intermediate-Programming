@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+
+        String lowerCase = name.toLowerCase();
+        String upperCase = name.toUpperCase();
+        String formatCase = toTitleCase(name);
+
+        System.out.println("\nConverted Results:");
+        System.out.println("lower case: " + lowerCase);
+        System.out.println("upper case: " + upperCase);
+        System.out.println("format case: " + formatCase);
+
+        scanner.close();
+    }
+
+    public static String toTitleCase(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder formattedName = new StringBuilder();
+
+        for (String word : words) {
+            if (word.length() > 0) {
+                String formattedWord = capitalizeWord(word);
+                formattedName.append(formattedWord).append(" ");
+            }
+        }
+
+        return formattedName.toString().trim();
+    }
+
+    public static String capitalizeWord(String word) {
+        StringBuilder result = new StringBuilder();
+        boolean capitalizeNext = true;
+
+        for (char c : word.toCharArray()) {
+            if (capitalizeNext && Character.isLetter(c)) {
+                result.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+            } else {
+                result.append(Character.toLowerCase(c));
+            }
+
+            if (c == '\'') {
+                capitalizeNext = true;
+            }
+        }
+
+        return result.toString();
+    }
+}
